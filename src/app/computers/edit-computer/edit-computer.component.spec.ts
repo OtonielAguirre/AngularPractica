@@ -7,6 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ComputerService } from 'src/app/services/computer.service';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { NEVER, of, throwError } from 'rxjs';
+import { Computer } from 'src/app/model/computer.model';
 
 describe('EditComputerComponent', () => {
   let component: EditComputerComponent;
@@ -50,6 +51,18 @@ describe('EditComputerComponent', () => {
 
   });
 
+  it('should load data', () => {
+    activatedRouteSpy.params = of({ id: 1 });
+
+    const computer: Computer = { id: 1, brand: 'HP', model: 'Pavilion' };
+
+    computerSvcSpy.getComputer.and.returnValue(of(computer));
+
+    component.formComputer?.patchValue(computer);
+
+    expect(component.formComputer).toBeTruthy();
+  });
+
   it('should params computer', () => {
     computerSvcSpy.changeComputers.and.returnValue(of({}));
     component.formComputer?.patchValue({
@@ -60,21 +73,30 @@ describe('EditComputerComponent', () => {
     expect(activatedRouteSpy.params).toBe(NEVER);
   });
 
+  it('should dont load data', () => {
+    activatedRouteSpy.params = of({ id: 2 });
 
-  it('should change computer', () => {
-    computerSvcSpy.changeComputers.and.returnValue(of({}));
-    component.formComputer?.patchValue({
-      brand: 'HP',
-      model: 'Pavilion',
-    });
-    component.computerId;
-    expect(computerSvcSpy.changeComputers).toBeTrue();
+    computerSvcSpy.getComputer.and.returnValue(
+      throwError(() => 'ERROR' + component.computerId)
+    );
+
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/computers']);
   });
 
-      
-  it('should not change computer', () => {
-    computerSvcSpy.changeComputers.and.returnValue(throwError(() => {'Computer not found'}));
+  
+  it('should update computer', () => {
+    activatedRouteSpy.params = of({ id: 3 });
+    computerSvcSpy.changeComputers.and.returnValue(of([]));
     component.changeComputer();
+    expect(routerSpy.navigate).toHaveBeenCalledWith(['/computers']);
+  });
+
+  it('should dont update', () => {
+    activatedRouteSpy.params = of({ id: 4 });
+    computerSvcSpy.changeComputers.and.returnValue(
+      throwError(() => 'error al hacer update')
+    );
+    component.changeComputer();
+    expect(window.alert).toHaveBeenCalled();
   });
 });
