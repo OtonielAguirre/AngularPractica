@@ -11,7 +11,7 @@ import { NEVER, of, throwError } from 'rxjs';
 describe('EditComputerComponent', () => {
   let component: EditComputerComponent;
   let fixture: ComponentFixture<EditComputerComponent>;
-
+  
   let computerSvcSpy = jasmine.createSpyObj<ComputerService>(
     'ComputerService',
     ['saveComputers', 'getComputer']
@@ -46,7 +46,20 @@ describe('EditComputerComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+    expect(component.formComputer).toBeTruthy();
+
   });
+
+  it('should params computer', () => {
+    computerSvcSpy.changeComputers.and.returnValue(of({}));
+    component.formComputer?.patchValue({
+      brand: 'HP',
+      model: 'Pavilion',
+    });
+    component.computerId;
+    expect(activatedRouteSpy.params).toBe(NEVER);
+  });
+
 
   it('should change computer', () => {
     computerSvcSpy.changeComputers.and.returnValue(of({}));
@@ -54,14 +67,14 @@ describe('EditComputerComponent', () => {
       brand: 'HP',
       model: 'Pavilion',
     });
-    const obs = component.changeComputer;
-    expect();
+    component.computerId;
+    expect(computerSvcSpy.changeComputers).toBeTrue();
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/computers']);
   });
 
       
   it('should not change computer', () => {
-    computerSvcSpy.saveComputers.and.returnValue(throwError(() => {'Computer not found'}));
+    computerSvcSpy.changeComputers.and.returnValue(throwError(() => {'Computer not found'}));
     component.changeComputer();
   });
 });
