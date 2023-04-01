@@ -1,0 +1,19 @@
+<div class="container" *ngIf="formComputer" [formGroup]="formComputer">
+  <mat-form-field>
+    <mat-label> Marca </mat-label>
+    <input matInput placeholder="{{ brandDef }}" formControlName="brand" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label> Modelo </mat-label>
+    <input matInput placeholder="{{ modelDef }}" formControlName="model" />
+  </mat-form-field>
+
+  <button
+    color="primary"
+    mat-stroked-button
+    [disabled]="formComputer.invalid"
+    (click)="changeComputer()"
+  >
+    Guardar
+  </button>
+</div>

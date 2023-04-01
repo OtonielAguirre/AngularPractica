@@ -1,0 +1,10 @@
+.users-container {
+  display: flex;
+  flex-direction: column;
+  width: 360px;
+  margin: auto;
+}
+
+.users-container h1 {
+  text-align: center;
+}

@@ -1,0 +1,7 @@
+{
+  "/computers/list": "/computers",
+  "/computers/get/:id": "/computers/:id",
+  "/computers/create": "/computers",
+  "/computers/update/:id": "/computers/:id",
+  "/computers/delete/:id": "/computers/:id"
+}

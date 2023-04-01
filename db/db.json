@@ -1,0 +1,36 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Test",
+      "age": 19
+    }
+  ],
+  "computers": [
+    {
+      "id": 1,
+      "brand": "Lenovo",
+      "model": "H1M1"
+    },
+    {
+      "brand": "HP",
+      "model": "Pavilion",
+      "id": 2
+    },
+    {
+      "brand": "Lenovo",
+      "model": "Yoga510",
+      "id": 3
+    },
+    {
+      "brand": "Huawei",
+      "model": "D15",
+      "id": 4
+    },
+    {
+      "brand": "Dell",
+      "model": "Alienware",
+      "id": 5
+    }
+  ]
+}
